@@ -38,6 +38,16 @@ app.use(taskRouter)
 // app.use(router)
 
 
+const multer = require('multer')
+const upload = multer({
+    dest: 'images'
+})
+
+app.post('/upload', upload.single('upload'), (req, res) => {
+    res.send()
+})
+
+
 //Server setup
 app.listen(port, () => {
     console.log(`The server is running at port ${port}`)
@@ -80,17 +90,17 @@ app.listen(port, () => {
 // }
 // console.log(JSON.stringify(pet))
 
-const Task = require('./models/task')
-const User = require('./models/user')
+// const Task = require('./models/task')
+// const User = require('./models/user')
 
-const main = async () => {
-    // const task = await Task.findById('5f8051bff98f007a901e74d0')
-    // await task.populate('owner').execPopulate()
-    // console.log(task.owner)
+// const main = async () => {
+//     // const task = await Task.findById('5f8051bff98f007a901e74d0')
+//     // await task.populate('owner').execPopulate()
+//     // console.log(task.owner)
 
-    const user = await User.findById('5f80502af98f007a901e74ce')
-    await user.populate('tasks').execPopulate()
-    console.log(user.tasks)
+//     const user = await User.findById('5f80502af98f007a901e74ce')
+//     await user.populate('tasks').execPopulate()
+//     console.log(user.tasks)
 
-}
-main()
+// }
+// main()

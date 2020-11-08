@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 
 //Mongoose setup to create connection with DB
-mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
+mongoose.connect('mongodb://127.0.0.1:27017/user-task-manager', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,

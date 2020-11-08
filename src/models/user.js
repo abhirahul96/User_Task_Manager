@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const task = require('../models/task')
+const Task = require('../models/task')
 //Setting up schema to perform operation on data before saving to db
 const userSchema = new mongoose.Schema({
     name: {
@@ -48,13 +48,15 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }]
-
-})
+},
+    {
+        timestamps: true
+    })
 
 //Virtual property-not actual data stored in database, its a relationship between two entities
 
 userSchema.virtual('tasks', {
-    ref: task,
+    ref: Task,
     localField: '_id',
     foreignField: 'owner'
 })
@@ -117,6 +119,14 @@ userSchema.pre('save', async function (next) {
 
     }
 
+    next()
+})
+
+//Delete user task when user is deleted
+userSchema.pre('remove', async function (next) {
+    const user = this
+
+    await Task.deleteMany({ owner: user._id })
     next()
 })
 
